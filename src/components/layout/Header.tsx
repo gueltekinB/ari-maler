@@ -1,0 +1,55 @@
+import Image from 'next/image'
+import Link from 'next/link'
+import { ServicesDropdown } from '@/components/navigation/ServicesDropdown'
+import { MobileMenu } from '@/components/layout/MobileMenu'
+
+const navLinks = [
+  { href: '/referenzen', label: 'Referenzen' },
+  { href: '/ueber-uns', label: 'Über uns' },
+  { href: '/kontakt', label: 'Kontakt' },
+]
+
+export function Header() {
+  return (
+    <header className="bg-navy sticky top-0 z-50 shadow-md">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative flex items-center justify-between h-16 md:h-20">
+          <Link href="/" className="flex items-center gap-3 flex-shrink-0">
+            <Image
+              src="/images/logo/logo-weiss.webp"
+              alt="Ari Maler GmbH Logo"
+              width={120}
+              height={72}
+              className="h-10 w-auto object-contain"
+              priority
+            />
+          </Link>
+
+          <nav className="hidden md:flex items-center gap-6">
+            <ul className="flex items-center gap-6">
+              <ServicesDropdown />
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-white/90 hover:text-white font-medium transition-colors py-2"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <Link
+              href="/kontakt"
+              className="bg-cta hover:bg-cta-hover text-white font-semibold px-5 py-2 rounded transition-colors text-sm"
+            >
+              Anfrage stellen
+            </Link>
+          </nav>
+
+          <MobileMenu />
+        </div>
+      </div>
+    </header>
+  )
+}
