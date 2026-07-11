@@ -1,0 +1,15 @@
+import { services } from '@/data/services'
+import { ServicePageLayout } from '@/components/services/ServicePageLayout'
+import type { Metadata } from 'next'
+
+const slug = 'betonkosmetik'
+const service = services.find((s) => s.slug === slug)!
+
+export const metadata: Metadata = {
+  title: service.navLabel,
+  description: service.heroSubtitle,
+}
+
+export default function Page() {
+  return <ServicePageLayout service={service} />
+}
