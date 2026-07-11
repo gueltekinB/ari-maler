@@ -1,4 +1,6 @@
-const PageHeader = ({ eyebrow, title, subtitle }) => (
+type PageHeaderProps = { eyebrow?: string; title: string; subtitle?: string };
+
+const PageHeader = ({ eyebrow, title, subtitle }: PageHeaderProps) => (
   <section style={{ background: 'var(--navy)', paddingTop: 140, paddingBottom: 72, color: 'white' }}>
     <div className="container">
       <span className="eyebrow eyebrow-light">{eyebrow}</span>

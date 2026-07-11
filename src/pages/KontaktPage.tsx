@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import PageHeader from '../components/PageHeader';
 
+type ContactForm = { name: string; email: string; telefon: string; betreff: string; nachricht: string };
+
 const KontaktPage = () => {
-  const [form, setForm] = useState({ name: '', email: '', telefon: '', betreff: '', nachricht: '' });
+  const [form, setForm] = useState<ContactForm>({ name: '', email: '', telefon: '', betreff: '', nachricht: '' });
   const [sent, setSent] = useState(false);
-  const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
-  const submit = (e) => { e.preventDefault(); setSent(true); };
+  const set = <K extends keyof ContactForm>(k: K, v: ContactForm[K]) => setForm(f => ({ ...f, [k]: v }));
+  const submit = (e: FormEvent<HTMLFormElement>) => { e.preventDefault(); setSent(true); };
 
   return (
     <div>

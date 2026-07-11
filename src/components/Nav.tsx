@@ -8,7 +8,7 @@ const Nav = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropOpen, setDropOpen] = useState(false);
   const [mobileSvcsOpen, setMobileSvcsOpen] = useState(false);
-  const dropRef = useRef(null);
+  const dropRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);

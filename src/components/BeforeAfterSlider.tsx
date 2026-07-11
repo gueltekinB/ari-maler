@@ -1,11 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type MouseEvent, type TouchEvent } from 'react';
 
-function BeforeAfterSlider({ before, after, title }) {
-  const containerRef = useRef(null);
+type BeforeAfterSliderProps = { before: string; after: string; title?: string };
+
+function BeforeAfterSlider({ before, after, title }: BeforeAfterSliderProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState(50);
   const draggingRef = useRef(false);
 
-  const updateFromClientX = useCallback((clientX) => {
+  const updateFromClientX = useCallback((clientX: number) => {
     const el = containerRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
@@ -14,9 +16,9 @@ function BeforeAfterSlider({ before, after, title }) {
     setPos(p);
   }, []);
 
-  const onMouseMove = (e) => { updateFromClientX(e.clientX); };
-  const onMouseDown = (e) => { draggingRef.current = true; updateFromClientX(e.clientX); };
-  const onTouchMove = (e) => { if (e.touches && e.touches[0]) updateFromClientX(e.touches[0].clientX); };
+  const onMouseMove = (e: MouseEvent<HTMLDivElement>) => { updateFromClientX(e.clientX); };
+  const onMouseDown = (e: MouseEvent<HTMLDivElement>) => { draggingRef.current = true; updateFromClientX(e.clientX); };
+  const onTouchMove = (e: TouchEvent<HTMLDivElement>) => { if (e.touches && e.touches[0]) updateFromClientX(e.touches[0].clientX); };
 
   useEffect(() => {
     const onUp = () => { draggingRef.current = false; };
@@ -46,14 +48,14 @@ function BeforeAfterSlider({ before, after, title }) {
         <img
           src={before}
           alt={`${title} – Vorher`}
-          draggable="false"
+          draggable={false}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }}
         />
         <div style={{ position: 'absolute', inset: 0, clipPath: `inset(0 ${100 - pos}% 0 0)`, pointerEvents: 'none' }}>
           <img
             src={after}
             alt={`${title} – Nachher`}
-            draggable="false"
+            draggable={false}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </div>

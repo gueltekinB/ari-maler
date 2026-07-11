@@ -1,4 +1,16 @@
-export const SERVICES = [
+export type Service = { id: string; label: string };
+
+export type ServiceCard = { id: string; num: string; title: string; desc: string };
+
+export type ServiceDetail = {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  intro: string;
+  features: { title: string; text: string }[];
+};
+
+export const SERVICES: Service[] = [
   { id: 'innenmalerei', label: 'Innenmalerei' },
   { id: 'aussenmalerei', label: 'Aussenmalerei' },
   { id: 'betonkosmetik', label: 'Betonkosmetik' },
@@ -6,7 +18,7 @@ export const SERVICES = [
   { id: 'brandwasser', label: 'Brand- & Wasserschadensanierung' },
 ];
 
-export const SERVICE_CARDS = [
+export const SERVICE_CARDS: ServiceCard[] = [
   { id: 'innenmalerei', num: '01', title: 'Innenmalerei', desc: 'Kreative Gestaltung Ihrer Innenräume mit hochwertigen Materialien und präziser Ausführung.' },
   { id: 'aussenmalerei', num: '02', title: 'Aussenmalerei', desc: 'Ästhetisch ansprechende und langlebige Fassaden, die vor Witterungseinflüssen schützen.' },
   { id: 'betonkosmetik', num: '03', title: 'Betonkosmetik', desc: 'Professionelle Bearbeitung und Veredelung von Betonflächen für ein makelloses Erscheinungsbild.' },
@@ -14,7 +26,7 @@ export const SERVICE_CARDS = [
   { id: 'brandwasser', num: '05', title: 'Brand- & Wasserschadensanierung', desc: 'Schnelle und zuverlässige Schadensbeseitigung nach Brand- oder Wasserschäden.' },
 ];
 
-export const SERVICE_DATA = {
+export const SERVICE_DATA: Record<string, ServiceDetail> = {
   innenmalerei: {
     eyebrow: 'Dienstleistungen',
     title: 'Innenmalerei',

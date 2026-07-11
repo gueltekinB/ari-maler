@@ -1,4 +1,6 @@
-export const BEFORE_AFTER = [
+export type BeforeAfterItem = { id: string; title: string; before: string; after: string };
+
+export const BEFORE_AFTER: BeforeAfterItem[] = [
   {
     id: 'waschkueche',
     title: 'Waschküche – Boden',

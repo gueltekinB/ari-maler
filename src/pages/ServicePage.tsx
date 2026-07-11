@@ -5,8 +5,8 @@ import ContactCTA from '../components/ContactCTA';
 import { SERVICE_DATA } from '../data/services';
 
 const ServicePage = () => {
-  const { id } = useParams();
-  const d = SERVICE_DATA[id];
+  const { id } = useParams<{ id: string }>();
+  const d = id ? SERVICE_DATA[id] : undefined;
   if (!d) return <Navigate to="/dienstleistungen" replace />;
 
   return (

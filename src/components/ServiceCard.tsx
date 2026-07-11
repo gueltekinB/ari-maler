@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
+import type { ServiceCard as ServiceCardType } from '../data/services';
 
-const ServiceCard = ({ s }) => (
+const ServiceCard = ({ s }: { s: ServiceCardType }) => (
   <div className="card" style={{ cursor: 'default' }}>
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
       <div style={{ fontFamily: 'var(--fh)', fontSize: 13, fontWeight: 700, color: 'var(--blue)', letterSpacing: '0.06em' }}>{s.num}</div>
