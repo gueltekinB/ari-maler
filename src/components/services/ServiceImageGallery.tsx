@@ -14,6 +14,7 @@ export function ServiceImageGallery({ images, title }: ServiceImageGalleryProps)
             src={src}
             alt={`${title} – Bild ${i + 1}`}
             fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover hover:scale-105 transition-transform duration-300"
           />
         </div>

@@ -30,8 +30,8 @@ export async function sendEmail(
 
   try {
     await resend.emails.send({
-      from: process.env.FROM_EMAIL ?? 'onboarding@resend.dev',
-      to: process.env.TO_EMAIL ?? 'info@ari-maler.ch',
+      from: process.env.FROM_EMAIL as string,
+      to: process.env.TO_EMAIL as string,
       replyTo: email,
       subject: `Kontaktanfrage: ${subject}`,
       html: `

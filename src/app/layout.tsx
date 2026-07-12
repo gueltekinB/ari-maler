@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de" className="h-full scroll-smooth">
+    <html lang="de" className="h-full scroll-smooth" data-scroll-behavior="smooth">
       <body className="min-h-full flex flex-col antialiased">
         <Header />
         <main className="flex-1">{children}</main>

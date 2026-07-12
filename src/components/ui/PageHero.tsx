@@ -12,7 +12,7 @@ export function PageHero({ subtitle, title, description, bgImage }: PageHeroProp
     <section className="relative py-24 md:py-32 overflow-hidden">
       {bgImage ? (
         <>
-          <Image src={bgImage} alt={title} fill className="object-cover" priority />
+          <Image src={bgImage} alt={title} fill sizes="100vw" className="object-cover" priority />
           <div className="absolute inset-0 bg-navy/75" />
         </>
       ) : (

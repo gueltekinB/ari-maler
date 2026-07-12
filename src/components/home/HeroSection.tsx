@@ -8,6 +8,7 @@ export function HeroSection() {
         src="/images/hero/pinsel.webp"
         alt="Ari Maler GmbH – Professionelle Malerarbeiten"
         fill
+        sizes="100vw"
         className="object-cover"
         priority
       />
