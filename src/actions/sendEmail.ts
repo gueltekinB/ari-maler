@@ -2,6 +2,7 @@
 
 import { z } from 'zod'
 import { resend } from '@/lib/resend'
+import { env } from '@/env'
 
 const schema = z.object({
   name: z.string().min(2).max(100),
@@ -30,8 +31,8 @@ export async function sendEmail(
 
   try {
     await resend.emails.send({
-      from: process.env.FROM_EMAIL as string,
-      to: process.env.TO_EMAIL as string,
+      from: env.FROM_EMAIL,
+      to: env.TO_EMAIL,
       replyTo: email,
       subject: `Kontaktanfrage: ${subject}`,
       html: `
