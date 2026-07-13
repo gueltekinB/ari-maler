@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { PageHero } from '@/components/ui/PageHero'
-import { GalleryGrid } from '@/components/gallery/GalleryGrid'
 import { BeforeAfterSlider } from '@/components/gallery/BeforeAfterSlider'
 import { CallToAction } from '@/components/home/CallToAction'
 import { beforeAfter } from '@/data/beforeAfter'
@@ -29,11 +28,6 @@ export default function ReferenzenPage() {
               <BeforeAfterSlider key={item.id} before={item.before} after={item.after} title={item.title} />
             ))}
           </div>
-        </div>
-      </section>
-      <section className="py-16 bg-off-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <GalleryGrid />
         </div>
       </section>
       <CallToAction />

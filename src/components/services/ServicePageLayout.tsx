@@ -1,6 +1,5 @@
 import { Service } from '@/data/services'
 import { PageHero } from '@/components/ui/PageHero'
-import { ServiceImageGallery } from '@/components/services/ServiceImageGallery'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { Button } from '@/components/ui/Button'
 import { CallToAction } from '@/components/home/CallToAction'
@@ -24,9 +23,8 @@ export function ServicePageLayout({ service }: { service: Service }) {
             {service.offerings.map((offering, i) => (
               <div
                 key={i}
-                className={`flex flex-col md:flex-row gap-10 items-center ${
-                  i % 2 === 1 ? 'md:flex-row-reverse' : ''
-                }`}
+                className={`flex flex-col md:flex-row gap-10 items-center ${i % 2 === 1 ? 'md:flex-row-reverse' : ''
+                  }`}
               >
                 <div className="flex-1">
                   <SectionHeader title={offering.title} />
@@ -49,20 +47,6 @@ export function ServicePageLayout({ service }: { service: Service }) {
           </div>
         </div>
       </section>
-
-      <section className="py-16 bg-off-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            subtitle="Einblicke"
-            title="Unsere Referenzen"
-            description="Überzeugen Sie sich selbst von der Qualität unserer Arbeit."
-          />
-          <div className="mt-10">
-            <ServiceImageGallery images={service.images} title={service.title} />
-          </div>
-        </div>
-      </section>
-
       <CallToAction />
     </>
   )
