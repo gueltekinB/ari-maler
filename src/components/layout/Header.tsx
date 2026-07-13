@@ -6,7 +6,6 @@ import { LogoLink } from '@/components/layout/LogoLink'
 const navLinks = [
   { href: '/referenzen', label: 'Referenzen' },
   { href: '/ueber-uns', label: 'Über uns' },
-  { href: '/kontakt', label: 'Kontakt' },
 ]
 
 export function Header() {
@@ -34,7 +33,7 @@ export function Header() {
               href="/kontakt"
               className="bg-cta hover:bg-cta-hover text-white font-semibold px-5 py-2 rounded transition-colors text-sm"
             >
-              Anfrage stellen
+              Kontakt
             </Link>
           </nav>
 

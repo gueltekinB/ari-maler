@@ -1,7 +1,6 @@
 import { Service } from '@/data/services'
 import { PageHero } from '@/components/ui/PageHero'
 import { SectionHeader } from '@/components/ui/SectionHeader'
-import { Button } from '@/components/ui/Button'
 import { CallToAction } from '@/components/home/CallToAction'
 
 export function ServicePageLayout({ service }: { service: Service }) {
@@ -13,40 +12,31 @@ export function ServicePageLayout({ service }: { service: Service }) {
         bgImage={service.images[0]}
       />
 
-      <section className="py-16 md:py-20 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-lg text-gray-600 leading-relaxed mb-16 max-w-3xl">
-            {service.description}
-          </p>
-
-          <div className="space-y-16">
-            {service.offerings.map((offering, i) => (
-              <div
-                key={i}
-                className={`flex flex-col md:flex-row gap-10 items-center ${i % 2 === 1 ? 'md:flex-row-reverse' : ''
-                  }`}
-              >
-                <div className="flex-1">
-                  <SectionHeader title={offering.title} />
-                  <p className="text-gray-600 leading-relaxed mt-2 mb-6">{offering.description}</p>
-                  <Button href="/kontakt" variant="primary">
-                    Jetzt Kontaktieren
-                  </Button>
-                </div>
-                <div className="flex-1 w-full">
-                  <div className="relative aspect-[3/2] rounded-lg overflow-hidden shadow-md">
-                    <img
-                      src={service.images[i + 1] ?? service.images[0]}
-                      alt={offering.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+      {service.offerings.map((offering, i) => (
+        <section
+          key={i}
+          className={`py-16 md:py-20 ${i > 0 ? 'border-t border-gray-100' : ''} ${i % 2 === 0 ? 'bg-white' : 'bg-gray-100'
+            }`}
+        >
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className={`flex flex-col md:flex-row gap-10 items-center ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
+              <div className="flex-1">
+                <SectionHeader title={offering.title} />
+                <p className="text-gray-600 leading-relaxed mt-2">{offering.description}</p>
+              </div>
+              <div className="flex-1 w-full">
+                <div className="relative aspect-[3/2] rounded-lg overflow-hidden shadow-md">
+                  <img
+                    src={service.images[i + 1] ?? service.images[0]}
+                    alt={offering.title}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ))}
       <CallToAction />
     </>
   )

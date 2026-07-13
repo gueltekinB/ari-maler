@@ -19,7 +19,7 @@ export function CallToAction() {
         </div>
         <div className="flex-shrink-0">
           <Button href="/kontakt" variant="primary" className="text-base px-8 py-4">
-            Jetzt Angebot anfragen
+            Jetzt Kontaktieren
           </Button>
         </div>
       </div>
