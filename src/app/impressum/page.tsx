@@ -3,6 +3,7 @@ import { PageHero } from '@/components/ui/PageHero'
 
 export const metadata: Metadata = {
   title: 'Impressum',
+  alternates: { canonical: '/impressum' },
 }
 
 export default function ImpressumPage() {

@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'Referenzen',
   description:
     'Einblick in unsere Referenzen – überzeugen Sie sich von der Qualität unserer Malerarbeiten und Sanierungen.',
+  alternates: { canonical: '/referenzen' },
 }
 
 export default function ReferenzenPage() {

@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: 'Über uns',
   description:
     'Lernen Sie Ari Maler GmbH kennen – seit 2022 Ihr zuverlässiger Malerpartner in der Region Basel.',
+  alternates: { canonical: '/ueber-uns' },
 }
 
 export default function UeberUnsPage() {

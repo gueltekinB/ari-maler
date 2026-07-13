@@ -6,6 +6,7 @@ import { ContactForm } from '@/components/contact/ContactForm'
 export const metadata: Metadata = {
   title: 'Kontakt',
   description: 'Nehmen Sie Kontakt mit Ari Maler GmbH auf – wir freuen uns auf Ihre Anfrage.',
+  alternates: { canonical: '/kontakt' },
 }
 
 export default function KontaktPage() {

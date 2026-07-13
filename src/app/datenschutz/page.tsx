@@ -3,6 +3,7 @@ import { PageHero } from '@/components/ui/PageHero'
 
 export const metadata: Metadata = {
   title: 'Datenschutzerklärung',
+  alternates: { canonical: '/datenschutz' },
 }
 
 export default function DatenschutzPage() {

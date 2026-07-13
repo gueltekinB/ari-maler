@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: 'Dienstleistungen',
   description:
     'Professionelle Malerarbeiten und Sanierungen: Innenmalerei, Aussenmalerei, Betonkosmetik, Dekorationsarbeiten und mehr.',
+  alternates: { canonical: '/dienstleistungen' },
 }
 
 export default function DienstleistungenPage() {
