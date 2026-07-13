@@ -5,7 +5,7 @@ import { SectionHeader } from '@/components/ui/SectionHeader'
 
 export function ServicesOverview() {
   return (
-    <section className="py-20 bg-off-white">
+    <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12">
           <SectionHeader

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { PageHero } from '@/components/ui/PageHero'
 import { BeforeAfterSlider } from '@/components/gallery/BeforeAfterSlider'
 import { CallToAction } from '@/components/home/CallToAction'
-import { beforeAfter } from '@/data/beforeAfter'
+import { beforeAfter, homeFeaturedIds } from '@/data/beforeAfter'
 
 export const metadata: Metadata = {
   title: 'Referenzen',
@@ -23,10 +23,20 @@ export default function ReferenzenPage() {
           <h2 className="text-2xl sm:text-3xl font-bold text-navy mb-8 text-center">
             Vorher &amp; Nachher
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {beforeAfter.map((item) => (
-              <BeforeAfterSlider key={item.id} before={item.before} after={item.after} title={item.title} />
-            ))}
+          <div className="divide-y divide-gray-200">
+            {beforeAfter
+              .filter((item) => !homeFeaturedIds.includes(item.id))
+              .map((item, index) => (
+                <div key={item.id} className="grid md:grid-cols-2 gap-8 md:gap-12 items-center py-12 first:pt-0 last:pb-0">
+                  <div className={index % 2 === 1 ? 'md:order-2' : ''}>
+                    <BeforeAfterSlider before={item.before} after={item.after} />
+                  </div>
+                  <div className={index % 2 === 1 ? 'md:order-1' : ''}>
+                    <h3 className="text-xl sm:text-2xl font-bold text-navy mb-3">{item.title}</h3>
+                    <p className="text-gray-600 leading-relaxed">{item.description}</p>
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
       </section>
