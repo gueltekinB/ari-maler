@@ -21,6 +21,21 @@ export const metadata: Metadata = {
     locale: 'de_CH',
     type: 'website',
     siteName: 'Ari Maler GmbH',
+    images: [
+      {
+        url: '/images/hero/pinsel.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Ari Maler GmbH – Malerarbeiten & Sanierungen',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ari Maler GmbH – Malerarbeiten & Sanierungen in der Region Basel',
+    description:
+      'Ihr Experte für Malerarbeiten und Sanierungen in der Region Basel. Innen- und Aussenmalerei, Betonkosmetik, Dekorationsarbeiten und Schadensanierungen.',
+    images: ['/images/hero/pinsel.webp'],
   },
 }
 

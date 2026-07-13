@@ -2,10 +2,18 @@ import { Service } from '@/data/services'
 import { PageHero } from '@/components/ui/PageHero'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { CallToAction } from '@/components/home/CallToAction'
+import { BreadcrumbJsonLd } from '@/components/seo/BreadcrumbJsonLd'
 
 export function ServicePageLayout({ service }: { service: Service }) {
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Startseite', path: '/' },
+          { name: 'Dienstleistungen', path: '/dienstleistungen' },
+          { name: service.navLabel, path: `/dienstleistungen/${service.slug}` },
+        ]}
+      />
       <PageHero
         subtitle={service.heroSubtitle}
         title={service.title}
