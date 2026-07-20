@@ -1,0 +1,45 @@
+Options -Indexes
+DirectoryIndex index.php
+
+AddDefaultCharset UTF-8
+
+# Sicherheits-Header (vorher in next.config.ts)
+<IfModule mod_headers.c>
+  Header always set X-Frame-Options "DENY"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains"
+</IfModule>
+
+ErrorDocument 404 /404.php
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # HTTPS erzwingen – aktivieren, falls der Host das nicht bereits übernimmt:
+  # RewriteCond %{HTTPS} !=on
+  # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  # Alte URLs -> neue Struktur (301, übernommen aus next.config.ts)
+  RewriteRule ^datenschutzerklaerung/?$ /datenschutz [R=301,L]
+  RewriteRule ^(innenmalerei|aussenmalerei|betonkosmetik|anstricharbeiten|dekorationsarbeiten|brand-und-wasserschadensanierungen)/?$ /dienstleistungen/$1 [R=301,L]
+
+  # Direkte .php-Aufrufe auf die schöne URL umleiten
+  RewriteCond %{THE_REQUEST} \s/+index\.php[\s?]
+  RewriteRule ^index\.php$ / [R=301,L]
+  RewriteCond %{THE_REQUEST} \s/+([a-z0-9-]+)\.php[\s?]
+  RewriteRule ^[a-z0-9-]+\.php$ /%1 [R=301,L]
+
+  # Abschliessenden Slash entfernen (ausser bei echten Verzeichnissen)
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+  # Schöne URLs -> PHP-Dateien
+  RewriteRule ^sitemap\.xml$ sitemap.php [L]
+  RewriteRule ^dienstleistungen$ dienstleistungen.php [L]
+  RewriteRule ^dienstleistungen/([a-z0-9-]+)$ dienstleistung.php?slug=$1 [L,QSA]
+
+  RewriteCond %{REQUEST_FILENAME}.php -f
+  RewriteRule ^([a-z0-9-]+)$ $1.php [L]
+</IfModule>

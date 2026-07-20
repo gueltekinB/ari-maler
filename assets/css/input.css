@@ -1,0 +1,41 @@
+/*
+ * Tailwind-Quelldatei. Wird LOKAL zu styles.css kompiliert (npm run build:css)
+ * und die kompilierte Datei wird eingecheckt – auf dem Server läuft kein Node.
+ */
+@import "tailwindcss";
+
+@source "../../*.php";
+@source "../../includes/*.php";
+@source "../js/*.js";
+/* Klassen, die nur per JavaScript gesetzt werden: */
+@source inline("rotate-180");
+@source inline("hidden");
+
+@theme {
+  --color-navy: #1e3a5f;
+  --color-navy-dark: #16304f;
+  --color-navy-light: #2a4d7a;
+  --color-accent: #2d6bb5;
+  --color-cta: #e8740c;
+  --color-cta-hover: #cf6509;
+  --color-off-white: #f8f9fa;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Header-Zustände, per JS in assets/js/main.js umgeschaltet */
+.site-header {
+  background-color: var(--color-navy);
+  border-color: transparent;
+}
+
+.site-header.is-home-top {
+  background-color: #667892;
+}
+
+.site-header.is-scrolled {
+  border-color: rgb(255 255 255 / 0.1);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}

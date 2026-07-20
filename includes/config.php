@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * Zentrale Konfiguration.
+ */
+
+define('SITE_URL', 'https://ari-maler.ch');
+define('SITE_NAME', 'Ari Maler GmbH');
+
+define('DEFAULT_TITLE', 'Ari Maler GmbH – Malerarbeiten & Sanierungen in der Region Basel');
+define('DEFAULT_DESCRIPTION', 'Ihr Experte für Malerarbeiten und Sanierungen in Basel-Stadt und Baselland. Innen- und Aussenmalerei, Betonkosmetik, Dekorationsarbeiten und Schadensanierungen.');
+
+// Kontaktformular: Empfänger und Absender.
+// CONTACT_FROM_EMAIL muss eine Adresse der eigenen Domain sein, damit der
+// Mailserver des Hosts den Versand zulässt (SPF). Die Adresse muss beim Host
+// als Mailbox oder Alias existieren bzw. zum Versand freigegeben sein.
+define('CONTACT_TO_EMAIL', 'info@ari-maler.ch');
+define('CONTACT_FROM_EMAIL', 'kontakt@ari-maler.ch');
