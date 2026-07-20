@@ -12,6 +12,16 @@
  *   breadcrumbs – optional: Liste von ['name' => ..., 'path' => ...] für JSON-LD
  */
 
+// Nur die echte Domain darf indexiert werden. Auf Vorschau-/Test-Domains
+// (Subdomain, technische Host-Domain, localhost) wird automatisch noindex
+// gesetzt – beim Go-Live muss dadurch nichts umgestellt werden.
+$httpHost = strtolower($_SERVER['HTTP_HOST'] ?? '');
+$isLiveHost = in_array($httpHost, ['ari-maler.ch', 'www.ari-maler.ch'], true);
+$noindex = !empty($page['noindex']) || !$isLiveHost;
+if (!$isLiveHost && !headers_sent()) {
+    header('X-Robots-Tag: noindex, nofollow');
+}
+
 $pageTitle = isset($page['title']) && $page['title'] !== null
     ? $page['title'] . ' | ' . SITE_NAME
     : DEFAULT_TITLE;
@@ -73,8 +83,8 @@ if (!empty($page['breadcrumbs'])) {
   <title><?= e($pageTitle) ?></title>
   <meta name="description" content="<?= e($pageDescription) ?>">
   <link rel="canonical" href="<?= e($canonical) ?>">
-  <?php if (!empty($page['noindex'])) : ?>
-  <meta name="robots" content="noindex, follow">
+  <?php if ($noindex) : ?>
+  <meta name="robots" content="noindex, <?= $isLiveHost ? 'follow' : 'nofollow' ?>">
   <?php endif; ?>
   <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
