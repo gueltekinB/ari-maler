@@ -81,12 +81,16 @@ HTML;
     );
 
     // $email ist durch FILTER_VALIDATE_EMAIL geprüft und kann keine Zeilenumbrüche enthalten.
-    $headers = implode("\r\n", [
+    $headerLines = [
         'MIME-Version: 1.0',
         'Content-Type: text/html; charset=UTF-8',
         'From: ' . SITE_NAME . ' <' . CONTACT_FROM_EMAIL . '>',
         'Reply-To: ' . $email,
-    ]);
+    ];
+    if (defined('CONTACT_BCC_EMAIL') && CONTACT_BCC_EMAIL) {
+        $headerLines[] = 'Bcc: ' . CONTACT_BCC_EMAIL;
+    }
+    $headers = implode("\r\n", $headerLines);
 
     // Envelope-Absender setzen (hilft gegen Spam-Einstufung); falls der Host
     // den -f-Parameter nicht erlaubt, ohne ihn erneut versuchen.

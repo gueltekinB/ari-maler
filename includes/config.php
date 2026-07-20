@@ -16,3 +16,7 @@ define('DEFAULT_DESCRIPTION', 'Ihr Experte für Malerarbeiten und Sanierungen in
 // als Mailbox oder Alias existieren bzw. zum Versand freigegeben sein.
 define('CONTACT_TO_EMAIL', 'info@ari-maler.ch');
 define('CONTACT_FROM_EMAIL', 'kontakt@ari-maler.ch');
+
+// Blindkopie jeder Formular-Anfrage (Archiv im Posteingang dieser Mailbox).
+// Auf null setzen, um keine Kopie zu versenden.
+define('CONTACT_BCC_EMAIL', 'kontakt@ari-maler.ch');
