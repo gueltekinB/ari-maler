@@ -43,9 +43,15 @@
         <div class="flex gap-4">
           <a href="/impressum" class="hover:text-white transition-colors">Impressum</a>
           <a href="/datenschutz" class="hover:text-white transition-colors">Datenschutz</a>
+          <?php if (GA4_MEASUREMENT_ID !== '') : ?>
+            <button type="button" data-cookie-settings class="hover:text-white transition-colors">Cookie-Einstellungen</button>
+          <?php endif; ?>
         </div>
       </div>
     </div>
   </footer>
+  <?php if (GA4_MEASUREMENT_ID !== '') {
+      require __DIR__ . '/cookie-banner.php';
+  } ?>
 </body>
 </html>

@@ -20,3 +20,10 @@ define('CONTACT_FROM_EMAIL', 'kontakt@ari-maler.ch');
 // Blindkopie jeder Formular-Anfrage (Archiv im Posteingang dieser Mailbox).
 // Auf null setzen, um keine Kopie zu versenden.
 define('CONTACT_BCC_EMAIL', 'kontakt@ari-maler.ch');
+
+// Google Analytics 4: Measurement-ID der GA4-Property.
+// Leerer String deaktiviert Cookie-Banner und Tracking vollständig.
+// Das gtag.js-Script lädt zusätzlich nur auf der Live-Domain
+// (ari-maler.ch/www), damit Vorschau- und lokale Besuche die
+// Statistik nicht verfälschen (siehe includes/cookie-banner.php).
+define('GA4_MEASUREMENT_ID', 'G-YQ7NJ5RM5Q');
