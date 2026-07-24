@@ -27,3 +27,17 @@ define('CONTACT_BCC_EMAIL', 'kontakt@ari-maler.ch');
 // (ari-maler.ch/www), damit Vorschau- und lokale Besuche die
 // Statistik nicht verfälschen (siehe includes/cookie-banner.php).
 define('GA4_MEASUREMENT_ID', 'G-YQ7NJ5RM5Q');
+
+// Cloudflare Turnstile (Spam-Schutz Kontaktformular).
+// Der Site-Key ist öffentlich (steht im HTML). Der Secret-Key darf NICHT
+// committet werden (öffentliches Repo!) und lebt in includes/secrets.php
+// (gitignoriert; Vorlage: secrets.example.php, Deployment per FTP).
+// Ist einer der beiden Keys leer, sind Widget und Prüfung deaktiviert.
+define('TURNSTILE_SITE_KEY', '0x4AAAAAAD8yjwZ_qxxsPN9q');
+
+if (is_file(__DIR__ . '/secrets.php')) {
+    require __DIR__ . '/secrets.php';
+}
+if (!defined('TURNSTILE_SECRET_KEY')) {
+    define('TURNSTILE_SECRET_KEY', '');
+}

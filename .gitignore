@@ -10,3 +10,6 @@ npm-debug.log*
 
 # env files (falls je benötigt)
 .env*
+
+# Geheime Schlüssel (nur lokal und per FTP auf dem Server)
+includes/secrets.php
