@@ -142,6 +142,10 @@ $labelClass = 'block text-sm font-medium text-navy mb-1';
             </div>
           <?php endif; ?>
 
+          <?php if (TURNSTILE_SITE_KEY !== '' && TURNSTILE_SECRET_KEY !== '') : ?>
+            <div class="cf-turnstile" data-sitekey="<?= e(TURNSTILE_SITE_KEY) ?>" data-language="de"></div>
+          <?php endif; ?>
+
           <button type="submit" class="w-full sm:w-auto bg-cta hover:bg-cta-hover disabled:opacity-60 text-white font-semibold px-8 py-3 rounded transition-colors cursor-pointer">
             Nachricht senden
           </button>
@@ -151,4 +155,7 @@ $labelClass = 'block text-sm font-medium text-navy mb-1';
   </div>
 </section>
 
+<?php if (TURNSTILE_SITE_KEY !== '' && TURNSTILE_SECRET_KEY !== '') : ?>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<?php endif; ?>
 <?php require __DIR__ . '/includes/page-footer.php';
