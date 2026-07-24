@@ -32,6 +32,9 @@ render_page_hero(['title' => 'Datenschutzerklärung']);
       <p>
         Wenn Sie uns über das Kontaktformular eine Nachricht senden, werden die von Ihnen eingegebenen Daten (Name, E-Mail-Adresse, Telefonnummer, Betreff und Nachrichtentext) zur Bearbeitung Ihrer Anfrage erhoben und gespeichert. Diese Daten werden nicht ohne Ihre Einwilligung an Dritte weitergegeben. Die Übertragung erfolgt per E-Mail über den Mailserver unseres Hosting-Anbieters.
       </p>
+      <p class="mt-2">
+        Zum Schutz vor automatisiertem Missbrauch (Spam) setzen wir beim Kontaktformular den Dienst «Turnstile» der Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA, ein. Turnstile prüft anhand technischer Merkmale (u. a. IP-Adresse, Browser-Eigenschaften und Interaktionsverhalten), ob eine Anfrage von einem Menschen stammt. Dabei kann Ihre IP-Adresse an Server von Cloudflare, auch in den USA, übermittelt werden; Cloudflare ist nach dem Swiss–U.S. Data Privacy Framework zertifiziert. Turnstile setzt keine Cookies zu Werbe- oder Trackingzwecken und erfordert daher keine Einwilligung. Rechtsgrundlage ist unser berechtigtes Interesse an der Abwehr von automatisiertem Missbrauch unseres Kontaktformulars.
+      </p>
       <h3 class="font-semibold text-navy mb-2 mt-4">Server-Logfiles</h3>
       <p>
         Der Hosting-Anbieter dieser Website erhebt automatisch Informationen, die Ihr Browser übermittelt. Dazu gehören Browsertyp, Betriebssystem, Referrer-URL, Hostname des zugreifenden Rechners und Uhrzeit der Serveranfrage. Diese Daten sind nicht bestimmten Personen zuordenbar und werden nicht mit anderen Datenquellen zusammengeführt.
