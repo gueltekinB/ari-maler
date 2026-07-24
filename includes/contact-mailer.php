@@ -1,6 +1,70 @@
 <?php
 
 /**
+ * Serverseitige Prüfung des Cloudflare-Turnstile-Tokens.
+ *
+ * Fail-open: Ist Cloudflare nicht erreichbar (Netzwerkfehler, Timeout,
+ * unparsebare Antwort), geben wir true zurück – eine verlorene
+ * Kundenanfrage wiegt schwerer als eine Spam-Mail, und der Honeypot
+ * bleibt als zweite Verteidigungslinie. Nur ein fehlendes oder von
+ * Cloudflare abgelehntes Token führt zu false.
+ */
+function verify_turnstile(string $token): bool
+{
+    if (TURNSTILE_SITE_KEY === '' || TURNSTILE_SECRET_KEY === '') {
+        return true; // Feature deaktiviert (Kill-Switch)
+    }
+    if ($token === '') {
+        return false; // Widget umgangen oder blockiert
+    }
+
+    $payload = http_build_query([
+        'secret' => TURNSTILE_SECRET_KEY,
+        'response' => $token,
+        'remoteip' => $_SERVER['REMOTE_ADDR'] ?? '',
+    ]);
+
+    $body = false;
+    if (function_exists('curl_init')) {
+        $ch = curl_init('https://challenges.cloudflare.com/turnstile/v0/siteverify');
+        curl_setopt_array($ch, [
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $payload,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 5,
+            CURLOPT_CONNECTTIMEOUT => 5,
+            // Explizit statt Default, damit die Zertifikatsprüfung nicht von
+            // der PHP-/cURL-Konfiguration des Hosts abhängt.
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_SSL_VERIFYHOST => 2,
+        ]);
+        $body = curl_exec($ch);
+        curl_close($ch);
+    } else {
+        $context = stream_context_create([
+            'http' => [
+                'method' => 'POST',
+                'header' => 'Content-Type: application/x-www-form-urlencoded',
+                'content' => $payload,
+                'timeout' => 5,
+            ],
+        ]);
+        $body = @file_get_contents('https://challenges.cloudflare.com/turnstile/v0/siteverify', false, $context);
+    }
+
+    if ($body === false || $body === '') {
+        return true; // Fail-open: Cloudflare nicht erreichbar
+    }
+
+    $result = json_decode($body, true);
+    if (!is_array($result) || !array_key_exists('success', $result)) {
+        return true; // Fail-open: unerwartete Antwort
+    }
+
+    return $result['success'] === true;
+}
+
+/**
  * Verarbeitung des Kontaktformulars: Validierung und Versand über den
  * Mailserver des Hosts (PHP mail() nutzt den lokalen Sendmail/MTA des Hostings).
  *
@@ -13,6 +77,11 @@ function handle_contact_form(array $post): array
     // Erfolg vortäuschen, damit Bots keinen Unterschied erkennen.
     if (!empty($post['website'])) {
         return ['success' => true, 'error' => null];
+    }
+
+    // Turnstile: Captcha-Token serverseitig prüfen (nach Honeypot, vor Validierung).
+    if (!verify_turnstile(trim((string) ($post['cf-turnstile-response'] ?? '')))) {
+        return ['success' => false, 'error' => 'Sicherheitsprüfung fehlgeschlagen. Bitte laden Sie die Seite neu und versuchen Sie es erneut.'];
     }
 
     $name = trim((string) ($post['name'] ?? ''));
