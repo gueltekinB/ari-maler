@@ -92,6 +92,7 @@
     var gaId = cookieBanner.getAttribute('data-ga-id');
     var gaActive = cookieBanner.getAttribute('data-ga-active') === '1';
     var gaLoaded = false;
+    var gaScriptInjected = false;
 
     var getConsent = function () {
       var match = document.cookie.match(/(?:^|;\s*)cookie_consent=(granted|denied)/);
@@ -117,23 +118,34 @@
       });
     };
 
+    var gaConsentSignals = function (state) {
+      return {
+        ad_storage: state,
+        ad_user_data: state,
+        ad_personalization: state,
+        analytics_storage: state
+      };
+    };
+
     var loadAnalytics = function () {
       if (gaLoaded || !gaActive || !gaId) {
         return;
       }
       gaLoaded = true;
+      if (gaScriptInjected) {
+        // Re-Aktivierung nach Widerruf auf derselben Seite: nur die
+        // Consent-Signale wieder erteilen, Script nicht erneut laden.
+        window.gtag('consent', 'update', gaConsentSignals('granted'));
+        return;
+      }
+      gaScriptInjected = true;
       window.dataLayer = window.dataLayer || [];
       window.gtag = function () {
         window.dataLayer.push(arguments);
       };
       // Consent Mode v2: alle Signale granted — das Script lädt ohnehin
       // erst nach ausdrücklicher Zustimmung (Basic Consent Mode).
-      window.gtag('consent', 'default', {
-        ad_storage: 'granted',
-        ad_user_data: 'granted',
-        ad_personalization: 'granted',
-        analytics_storage: 'granted'
-      });
+      window.gtag('consent', 'default', gaConsentSignals('granted'));
       window.gtag('js', new Date());
       window.gtag('config', gaId);
       var gaScript = document.createElement('script');
@@ -142,12 +154,37 @@
       document.head.appendChild(gaScript);
     };
 
+    // Conversion-Events — feuern nur, wenn GA geladen ist.
+    var track = function (name) {
+      if (gaLoaded && typeof window.gtag === 'function') {
+        window.gtag('event', name);
+      }
+    };
+
+    // Formular-Erfolg (/kontakt?gesendet=1); sessionStorage verhindert
+    // Doppelzählung beim Aktualisieren der Erfolgsseite. Wird beim Laden
+    // UND nach «Akzeptieren» geprüft, damit auch zählt, wer erst auf der
+    // Erfolgsseite zustimmt.
+    var trackLeadOnce = function () {
+      if (gaLoaded && document.querySelector('[data-ga-lead]') && !sessionStorage.getItem('gaLeadTracked')) {
+        track('generate_lead');
+        sessionStorage.setItem('gaLeadTracked', '1');
+      }
+    };
+
     var applyConsent = function (value) {
       setConsent(value);
       cookieBanner.classList.add('hidden');
       if (value === 'granted') {
         loadAnalytics();
+        trackLeadOnce();
       } else {
+        // Widerruf: Tracking sofort stoppen, Consent-Signale entziehen,
+        // vorhandene GA-Cookies löschen.
+        if (gaLoaded && typeof window.gtag === 'function') {
+          window.gtag('consent', 'update', gaConsentSignals('denied'));
+        }
+        gaLoaded = false;
         deleteGaCookies();
       }
     };
@@ -174,19 +211,7 @@
       cookieBanner.classList.remove('hidden');
     }
 
-    // Conversion-Events — feuern nur, wenn GA geladen ist.
-    var track = function (name) {
-      if (gaLoaded && typeof window.gtag === 'function') {
-        window.gtag('event', name);
-      }
-    };
-
-    // Formular-Erfolg (/kontakt?gesendet=1); sessionStorage verhindert
-    // Doppelzählung beim Aktualisieren der Erfolgsseite.
-    if (document.querySelector('[data-ga-lead]') && gaLoaded && !sessionStorage.getItem('gaLeadTracked')) {
-      track('generate_lead');
-      sessionStorage.setItem('gaLeadTracked', '1');
-    }
+    trackLeadOnce();
 
     document.addEventListener('click', function (e) {
       var contactLink = e.target.closest('a[href^="tel:"], a[href^="mailto:"]');
