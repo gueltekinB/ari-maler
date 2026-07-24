@@ -33,6 +33,10 @@ function verify_turnstile(string $token): bool
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT => 5,
             CURLOPT_CONNECTTIMEOUT => 5,
+            // Explizit statt Default, damit die Zertifikatsprüfung nicht von
+            // der PHP-/cURL-Konfiguration des Hosts abhängt.
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_SSL_VERIFYHOST => 2,
         ]);
         $body = curl_exec($ch);
         curl_close($ch);
