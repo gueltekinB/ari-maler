@@ -17,6 +17,14 @@ ErrorDocument 404 /404.php
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
+  # Repo-Interna nicht ausliefern (Doku, Build-Tooling, Metadaten).
+  # 404 statt 403, damit die Existenz der Dateien nicht bestätigt wird.
+  RewriteRule ^(docs|scripts)(/|$) - [R=404,L]
+  RewriteRule ^\.gitignore$ - [R=404,L]
+  RewriteRule ^package(-lock)?\.json$ - [R=404,L]
+  RewriteRule \.md$ - [R=404,L]
+  RewriteRule ^assets/css/input\.css$ - [R=404,L]
+
   # HTTPS erzwingen – aktivieren, falls der Host das nicht bereits übernimmt:
   # RewriteCond %{HTTPS} !=on
   # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
