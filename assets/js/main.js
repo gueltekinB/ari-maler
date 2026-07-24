@@ -164,7 +164,9 @@
     // Formular-Erfolg (/kontakt?gesendet=1); sessionStorage verhindert
     // Doppelzählung beim Aktualisieren der Erfolgsseite. Wird beim Laden
     // UND nach «Akzeptieren» geprüft, damit auch zählt, wer erst auf der
-    // Erfolgsseite zustimmt.
+    // Erfolgsseite zustimmt. Bewusste Einschränkung: eine echte zweite
+    // Anfrage in derselben Browser-Session ist vom blossen Aktualisieren
+    // nicht unterscheidbar und wird daher nicht erneut gezählt.
     var trackLeadOnce = function () {
       if (gaLoaded && document.querySelector('[data-ga-lead]') && !sessionStorage.getItem('gaLeadTracked')) {
         track('generate_lead');
